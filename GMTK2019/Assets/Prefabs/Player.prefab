@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8454854188561063769}
   - component: {fileID: 8454854188561063770}
   - component: {fileID: 8454854188561063771}
+  - component: {fileID: 2138480488978349461}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -50,7 +51,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 9
   m_Material: {fileID: 0}
   m_Interpolate: 1
   m_SleepingMode: 1
@@ -84,6 +85,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   horizontalAxis: Horizontal
   verticalAxis: Vertical
+  jumpSens: 0.1
   onHorizontalInputAxis:
     m_PersistentCalls:
       m_Calls:
@@ -100,12 +102,12 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: SnSMovement.Character.InputAxisEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  onVerticalInputAxis:
+  onJump:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8454854188561063770}
-        m_MethodName: MoveVertical
-        m_Mode: 0
+      - m_Target: {fileID: 2138480488978349461}
+        m_MethodName: DoJump
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -114,8 +116,29 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: SnSMovement.Character.InputAxisEvent, Assembly-CSharp, Version=0.0.0.0,
+    m_TypeName: SnSMovement.Character.InputButtonEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &2138480488978349461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8454854188561063764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78df34ca05c1144c582e47567c16dba2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpCooldown:
+    Unlimited: 0
+    ConsumptionDuration: 0.5
+    PauseOnEmptyDuration: 0
+    RefillDuration: 0.5
+    CanInterruptRefill: 0
+    CooldownState: 0
+    CurrentDurationLeft: 0
+  jumpVelocity: 10
 --- !u!1 &8454854188781097110
 GameObject:
   m_ObjectHideFlags: 0

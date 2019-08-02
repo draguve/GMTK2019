@@ -22,7 +22,8 @@ namespace SnSMovement.Character
 		{
 			goalVelocity.Normalize ();
 			goalVelocity *= speed;
-			rb.velocity = Vector2.SmoothDamp (rb.velocity, goalVelocity, ref currentVelocityRef, accelerationDuration, float.MaxValue, Time.deltaTime);
+			float x = Mathf.SmoothDamp (rb.velocity.x, goalVelocity.x, ref currentVelocityRef.x, accelerationDuration, float.MaxValue, Time.deltaTime);
+			rb.velocity = new Vector2(x,rb.velocity.y);
 		}
 
 		public void Move (Vector2 direction)
@@ -38,6 +39,11 @@ namespace SnSMovement.Character
 		public void MoveVertical(float amount)
 		{
 			goalVelocity.y = amount;
+		}
+
+		public void Jump(float jumpVelocity)
+		{
+			rb.velocity = rb.velocity + Vector2.up * jumpVelocity;
 		}
 	}
 }
