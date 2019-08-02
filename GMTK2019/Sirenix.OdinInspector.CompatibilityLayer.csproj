@@ -273,15 +273,6 @@
     <Reference Include="Sirenix.OdinInspector.Attributes">
       <HintPath>/Users/Jaineet/GMTK2019/GMTK2019/Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinInspector.Attributes.dll</HintPath>
     </Reference>
-    <Reference Include="Rewired_Core">
-      <HintPath>/Users/Jaineet/GMTK2019/GMTK2019/Assets/Rewired/Internal/Libraries/Runtime/Rewired_Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Rewired_OSX">
-      <HintPath>/Users/Jaineet/GMTK2019/GMTK2019/Assets/Rewired/Internal/Libraries/Runtime/Rewired_OSX.dll</HintPath>
-    </Reference>
-    <Reference Include="Rewired_Editor">
-      <HintPath>/Users/Jaineet/GMTK2019/GMTK2019/Assets/Rewired/Internal/Libraries/Editor/Rewired_Editor.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor.Advertisements">
       <HintPath>/Users/Jaineet/GMTK2019/GMTK2019/Library/PackageCache/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll</HintPath>
     </Reference>
