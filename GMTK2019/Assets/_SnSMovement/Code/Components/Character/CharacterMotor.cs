@@ -34,6 +34,7 @@ namespace SnSMovement.Character
 		{
 			goalVelocity.x = amount;
 		}
+		
 		public void MoveVertical(float amount)
 		{
 			goalVelocity.y = amount;
