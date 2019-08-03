@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8454854188561063770}
   - component: {fileID: 8454854188561063771}
   - component: {fileID: 2138480488978349461}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,13 +132,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpCooldown:
     Unlimited: 0
-    ConsumptionDuration: 0.5
+    ConsumptionDuration: 0.1
     PauseOnEmptyDuration: 0
-    RefillDuration: 0.5
+    RefillDuration: 0.1
     CanInterruptRefill: 0
     CooldownState: 0
     CurrentDurationLeft: 0
-  jumpVelocity: 10
+  jumpVelocity: 30
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 0
+  isJumping: 0
 --- !u!1 &8454854188781097110
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,7 +154,7 @@ GameObject:
   - component: {fileID: 8454854188781097109}
   - component: {fileID: 8454854188781097108}
   - component: {fileID: 8454854188781097115}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Graphic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -242,7 +246,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8454854188798514854}
   - component: {fileID: 8454854188798514853}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Collision
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -300,7 +304,7 @@ GameObject:
   - component: {fileID: 8454854189031886794}
   - component: {fileID: 8454854189031886793}
   - component: {fileID: 8454854189031886792}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GraphicSquasher
   m_TagString: Untagged
   m_Icon: {fileID: 0}

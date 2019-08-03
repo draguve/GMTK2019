@@ -6,22 +6,41 @@ using UnityEngine;
 
 public class PlayerJump : MonoBehaviour
 {
-    public MMCooldown jumpCooldown;
+    public MMCooldown ignoreJumpResetCooldown;
     public float jumpVelocity;
+    public float rayCastDistance = 2f;
+
+    public LayerMask collisionMask;
+    [HideInInspector]
+    public bool isJumping;
     
     private CharacterMotor characterMotor;
+    private Collider2D _collider;
     
     // Start is called before the first frame update
     void Start()
     {
-        jumpCooldown.Initialization();
+        isJumping = false;
+        ignoreJumpResetCooldown.Initialization();
         characterMotor = GetComponent<CharacterMotor>();
+        _collider = GetComponentInChildren<Collider2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        jumpCooldown.Update();
+        ignoreJumpResetCooldown.Update();
+        if (isJumping && ignoreJumpResetCooldown.Ready())
+        {
+            RaycastHit2D hit = Physics2D.Raycast((transform.position),Vector2.down, rayCastDistance, collisionMask);
+            if (hit)
+            {
+                if (Physics2D.IsTouching(_collider, hit.collider))
+                {
+                    isJumping = false;
+                }
+            }
+        }
     }
 
     
@@ -30,10 +49,11 @@ public class PlayerJump : MonoBehaviour
     /// </summary>
     public void DoJump()
     {
-        if (jumpCooldown.Ready())
+        if (!isJumping)
         {
-            jumpCooldown.Start();
+            ignoreJumpResetCooldown.Start();
             characterMotor.Jump(jumpVelocity);
+            isJumping = true;
         }
     }
 }
