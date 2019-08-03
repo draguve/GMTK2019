@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using TMPro;
 using UnityEngine;
 
@@ -71,9 +72,9 @@ public class MenuManager : MonoBehaviour
     }
     
 
-    void ChangeState()
+    void ChangeState(int x)
     {
-        switch (state)
+        switch (x)
                 {
                     case 1:
                         _play = true;
@@ -100,7 +101,7 @@ public class MenuManager : MonoBehaviour
                         CreditsContent.active = false;
                         ExitContent.active = false;
                         
-                        state = 2;
+                        //state = state+x;
                         break;
                     case 2:
                         _play = false;
@@ -127,7 +128,7 @@ public class MenuManager : MonoBehaviour
                         CreditsContent.active = false;
                         ExitContent.active = false;
                         
-                        state = 3;
+                        //state = state+x;
                         break;
                     case 3:
                         _play = false;
@@ -155,7 +156,7 @@ public class MenuManager : MonoBehaviour
                         ExitContent.active = false;
                         
                         
-                        state = 4;
+                       // state = state+x;
                         break;
                     case 4:
                         _play = false;
@@ -183,9 +184,38 @@ public class MenuManager : MonoBehaviour
                         CreditsContent.active = false;
                         ExitContent.active = true;
                         
-                        state = 1;
+                        //state = (state+x)%4;
                         break;
-                    
+                    case 0:
+                        state = 4;
+                        _play = false;
+                        _credits = false;
+                        _options = false;
+                        _exit = true;
+                        _playTextAnimator.SetBool("Play",false);
+                        _creditsTextAnimator.SetBool("Credits", false);
+                        _optionsTextAnimator.SetBool("Options", false);
+                        _exitTextAnimator.SetBool("Exit", true);
+                        
+                        _playAnimator.SetBool("Play",false);
+                        _creditsAnimator.SetBool("Credits", false);
+                        _optionsAnimator.SetBool("Options", false);
+                        _exitAnimator.SetBool("Exit",true);
+                        
+                        _playContentAnimator.SetBool("Play",false);
+                        _creditsContentAnimator.SetBool("Credits", false);
+                        _optionsContentAnimator.SetBool("Options", false);
+                        _exitContentAnimator.SetBool("Exit", true);
+                        
+                        
+                        PlayContent.active = false;
+                        OptionsContent.active = false;
+                        CreditsContent.active = false;
+                        ExitContent.active = true;
+                        
+                        //state = (state+x)%4;
+                        break;
+                        
                 }
     }
     
@@ -199,10 +229,20 @@ public class MenuManager : MonoBehaviour
         
             if (Input.GetKeyDown(KeyCode.D))
             {
-                ChangeState();
+                state = (state + 1)%4;
+                ChangeState(state);
                 
             }
-            
+            else if (Input.GetKeyDown(KeyCode.A))
+            {
+                state = (state - 1);
+                if (state <= 0)
+                {
+                    state = 4;
+                }
+                ChangeState(state);
+                
+            }
         
     }
 }
