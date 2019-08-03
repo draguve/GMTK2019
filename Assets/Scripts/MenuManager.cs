@@ -14,7 +14,8 @@ public class MenuManager : MonoBehaviour
     private Animator _playContentAnimator,_optionsContentAnimator,_creditsContentAnimator,_exitContentAnimator;
 
     public GameObject PlayContent, OptionsContent, CreditsContent, ExitContent;
-    
+
+    private int _screenWidth;
     
     private bool _play,_credits,_options,_exit;
 
@@ -27,7 +28,7 @@ public class MenuManager : MonoBehaviour
         _credits = false;
         _options = false;
         _exit = false;
-        
+        _screenWidth = Screen.width;
         _playAnimator = PlayPanel.GetComponent<Animator>();
         _optionsAnimator = OptionsPanel.GetComponent<Animator>();
         _creditsAnimator = CreditsPanel.GetComponent<Animator>();
@@ -227,7 +228,7 @@ public class MenuManager : MonoBehaviour
     {
         Debug.Log(state);
         
-            if (Input.GetKeyDown(KeyCode.D))
+            if ((Input.GetKeyDown(KeyCode.D)))
             {
                 state = (state + 1)%4;
                 ChangeState(state);
@@ -242,6 +243,26 @@ public class MenuManager : MonoBehaviour
                 }
                 ChangeState(state);
                 
+            }
+            else if ((Input.mousePosition.x > 0) && (Input.mousePosition.x < (_screenWidth / 4)))
+            {
+                state = 1;
+                ChangeState(state);
+            }
+            else if ((Input.mousePosition.x > _screenWidth/4) && (Input.mousePosition.x < (_screenWidth / 2)))
+            {
+                state = 2;
+                ChangeState(state);
+            }
+            else if ((Input.mousePosition.x > (_screenWidth/2)) && (Input.mousePosition.x < (3*_screenWidth) / 4))
+            {
+                state = 3;
+                ChangeState(state);
+            }
+            else if ((Input.mousePosition.x > (3*_screenWidth/4)) && (Input.mousePosition.x < _screenWidth ))
+            {
+                state = 4;
+                ChangeState(state);
             }
         
     }
