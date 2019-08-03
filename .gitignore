@@ -1,10 +1,10 @@
-/GMTK2019/[Ll]ibrary/
-/GMTK2019/[Tt]emp/
-/GMTK2019/[Oo]bj/
-/GMTK2019/[Bb]uild/
-/GMTK2019/[Bb]uilds/
-/GMTK2019/[Ll]ogs/
-/GMTK2019/[Mm]emoryCaptures/
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
 
 # Never ignore Asset meta data
 !/[Aa]ssets/**/*.meta
@@ -16,8 +16,8 @@
 [Aa]ssets/Plugins/Editor/JetBrains*
 
 # Visual Studio cache directory
-GMTK2019/.vs/
-GMTK2019/.idea/
+.vs/
+.idea/
 
 # Gradle cache directory
 .gradle/
@@ -55,6 +55,8 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
-GMTK2019/Library/
+Library/
 
-GMTK2019/Temp/
+Temp/
+
+obj/
