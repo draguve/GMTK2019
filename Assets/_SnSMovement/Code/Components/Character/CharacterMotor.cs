@@ -1,4 +1,5 @@
 ﻿using MoreMountains.Tools;
+using UnityEditor.UIElements;
 using UnityEngine;
 
 namespace SnSMovement.Character
@@ -9,12 +10,14 @@ namespace SnSMovement.Character
 		public float speed = 5f;
 		public float accelerationDuration = 0.5f;
 		public float dragVelocityScaleFactor = 0.2f;
+		public Button lastButtonPressed;
 		
 		private Rigidbody2D rb;
 		private Collider2D _collider;
 
 		private Vector2 goalVelocity;
 		private Vector2 currentVelocityRef;
+		private bool _buttonCanTrigger;
 		
 		public float rayCastDistance = 2f;
 		public LayerMask collisionMask;
@@ -23,11 +26,13 @@ namespace SnSMovement.Character
 		public bool _canMoveLeft = true;
 
 		public LayerMask movingPlatformMask;
+		public LayerMask buttonLayerMask;
 
 		private void Start ()
 		{
 			rb = GetComponent<Rigidbody2D> ();
 			_collider = gameObject.GetComponentInChildren<Collider2D>();
+			_buttonCanTrigger = true;
 		}
 
 		private void Update ()
@@ -35,6 +40,7 @@ namespace SnSMovement.Character
 			goalVelocity.Normalize ();
 			goalVelocity *= speed;
 
+			// Moving platform
 			RaycastHit2D hit = Physics2D.Raycast((transform.position),Vector2.down, rayCastDistance, movingPlatformMask);
 			if (hit)
 			{
@@ -45,6 +51,30 @@ namespace SnSMovement.Character
 					{
 						goalVelocity += hit.transform.GetComponent<Rigidbody2D>().velocity;
 					}
+				}
+			}
+			
+			// Button
+			hit = Physics2D.Raycast((transform.position),Vector2.down, rayCastDistance, buttonLayerMask);
+			if (hit)
+			{
+				var buttonScript = hit.transform.gameObject.GetComponent<Button>();
+				if (Physics2D.IsTouching(_collider, hit.collider)&&_buttonCanTrigger)
+				{
+					buttonScript.ButtonPressed();
+					lastButtonPressed = buttonScript;
+				}
+				else
+				{
+					buttonScript.ButtonReleased();
+				}
+			}
+			if(hit.collider == null)
+			{
+				if (lastButtonPressed != null)
+				{
+					lastButtonPressed.ButtonReleased();
+					lastButtonPressed = null;
 				}
 			}
 			
@@ -66,6 +96,7 @@ namespace SnSMovement.Character
 			hit = Physics2D.Raycast(transform.position,Vector2.left, rayCastDistance, collisionMask);
 			if (hit)
 			{
+				
 				if (Physics2D.IsTouching(_collider, hit.collider))
 				{
 					_canMoveLeft = false;

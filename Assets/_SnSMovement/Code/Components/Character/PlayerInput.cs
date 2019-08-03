@@ -14,7 +14,7 @@ namespace SnSMovement.Character
 		public string horizontalAxis = "Horizontal";
 		public string verticalAxis = "Vertical";
 		public float jumpSens = 0.1f;
-		
+
 		public InputAxisEvent onHorizontalInputAxis = new InputAxisEvent ();
 		public InputButtonEvent onJump = new InputButtonEvent();
 
