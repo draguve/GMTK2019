@@ -10,30 +10,25 @@ namespace MoreMountains.TopDownEngine
     /// </summary>
     public class MovingPlatform2D : MMPathMovement
     {
-        private Rigidbody2D rb;
+        public float movementSpeedToSet;
+        public bool startMoving;
+        
+        public void StartMoving()
+        {
+            MovementSpeed = movementSpeedToSet;
+        }
+        public void StopMoving()
+        {
+            MovementSpeed = 0;
+        }
 
-        protected override void Start()
+        void Start()
         {
             base.Start();
-            rb = GetComponent<Rigidbody2D>();
-        }
-        
-        /// <summary>
-        /// When something collides, if it's a top down controller, we assign this platform to it
-        /// </summary>
-        /// <param name="collider"></param>
-        protected virtual void OnTriggerEnter2D(Collider2D collider)
-        {
-
-        }
-
-        /// <summary>
-        /// When something stops colliding, if it's a top down controller, we unassign this platform to it
-        /// </summary>
-        /// <param name="collider"></param>
-        protected virtual void OnTriggerExit2D(Collider2D collider)
-        {
-
+            if (startMoving)
+            {
+                MovementSpeed = movementSpeedToSet;
+            }
         }
     }
 }
