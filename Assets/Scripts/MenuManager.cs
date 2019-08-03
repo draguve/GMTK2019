@@ -19,6 +19,12 @@ public class MenuManager : MonoBehaviour
     private bool _play,_credits,_options,_exit;
 
     private int state;
+
+    private static readonly int Exit = Animator.StringToHash("Exit");
+    private static readonly int Play = Animator.StringToHash("Play");
+    private static readonly int Credits = Animator.StringToHash("Credits");
+    private static readonly int Options = Animator.StringToHash("Options");
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,20 +49,20 @@ public class MenuManager : MonoBehaviour
         _creditsContentAnimator = CreditsText.GetComponent<Animator>();
         _exitContentAnimator = ExitText.GetComponent<Animator>();
         
-        _playTextAnimator.SetBool("Play",true);
-        _creditsTextAnimator.SetBool("Credits", false);
-        _optionsTextAnimator.SetBool("Options", false);
-        _exitTextAnimator.SetBool("Exit", false);
+        _playTextAnimator.SetBool(Play,true);
+        _creditsTextAnimator.SetBool(Credits, false);
+        _optionsTextAnimator.SetBool(Options, false);
+        _exitTextAnimator.SetBool(Exit, false);
         
-        _playAnimator.SetBool("Play",true);
-        _creditsAnimator.SetBool("Credits", false);
-        _optionsAnimator.SetBool("Options", false);
-        _exitAnimator.SetBool("Exit", false);
+        _playAnimator.SetBool(Play,true);
+        _creditsAnimator.SetBool(Credits, false);
+        _optionsAnimator.SetBool(Options, false);
+        _exitAnimator.SetBool(Exit, false);
         
-        _playContentAnimator.SetBool("Play",true);
-        _creditsContentAnimator.SetBool("Credits", false);
-        _optionsContentAnimator.SetBool("Options", false);
-        _exitContentAnimator.SetBool("Exit", false);
+        _playContentAnimator.SetBool(Play,true);
+        _creditsContentAnimator.SetBool(Credits, false);
+        _optionsContentAnimator.SetBool(Options, false);
+        _exitContentAnimator.SetBool(Exit, false);
 
         PlayContent.active = false;
         OptionsContent.active = false;
@@ -81,20 +87,20 @@ public class MenuManager : MonoBehaviour
                         _credits = false;
                         _options = false;
                         _exit = false;
-                        _playTextAnimator.SetBool("Play",true);
-                        _creditsTextAnimator.SetBool("Credits", false);
-                        _optionsTextAnimator.SetBool("Options", false);
-                        _exitTextAnimator.SetBool("Exit", false);
+                        _playTextAnimator.SetBool(Play,true);
+                        _creditsTextAnimator.SetBool(Credits, false);
+                        _optionsTextAnimator.SetBool(Options, false);
+                        _exitTextAnimator.SetBool(Exit, false);
                         
-                        _playAnimator.SetBool("Play",true);
-                        _creditsAnimator.SetBool("Credits", false);
-                        _optionsAnimator.SetBool("Options", false);
-                        _exitAnimator.SetBool("Exit", false);
+                        _playAnimator.SetBool(Play,true);
+                        _creditsAnimator.SetBool(Credits, false);
+                        _optionsAnimator.SetBool(Options, false);
+                        _exitAnimator.SetBool(Exit, false);
                         
-                        _playContentAnimator.SetBool("Play",true);
-                        _creditsContentAnimator.SetBool("Credits", false);
-                        _optionsContentAnimator.SetBool("Options", false);
-                        _exitContentAnimator.SetBool("Exit", false);
+                        _playContentAnimator.SetBool(Play,true);
+                        _creditsContentAnimator.SetBool(Credits, false);
+                        _optionsContentAnimator.SetBool(Options, false);
+                        _exitContentAnimator.SetBool(Exit, false);
                         
                         PlayContent.active = true;
                         OptionsContent.active = false;
@@ -108,20 +114,20 @@ public class MenuManager : MonoBehaviour
                         _credits = false;
                         _options = true;
                         _exit = false;
-                        _playTextAnimator.SetBool("Play",false);
-                        _creditsTextAnimator.SetBool("Credits", false);
-                        _optionsTextAnimator.SetBool("Options", true);
-                        _exitTextAnimator.SetBool("Exit", false);
+                        _playTextAnimator.SetBool(Play,false);
+                        _creditsTextAnimator.SetBool(Credits, false);
+                        _optionsTextAnimator.SetBool(Options, true);
+                        _exitTextAnimator.SetBool(Exit, false);
                         
-                        _playAnimator.SetBool("Play",false);
-                        _creditsAnimator.SetBool("Credits", false);
-                        _optionsAnimator.SetBool("Options", true);
-                        _exitAnimator.SetBool("Exit", false);
+                        _playAnimator.SetBool(Play,false);
+                        _creditsAnimator.SetBool(Credits, false);
+                        _optionsAnimator.SetBool(Options, true);
+                        _exitAnimator.SetBool(Exit, false);
                         
-                        _playContentAnimator.SetBool("Play",false);
-                        _creditsContentAnimator.SetBool("Credits", false);
-                        _optionsContentAnimator.SetBool("Options", true);
-                        _exitContentAnimator.SetBool("Exit", false);
+                        _playContentAnimator.SetBool(Play,false);
+                        _creditsContentAnimator.SetBool(Credits, false);
+                        _optionsContentAnimator.SetBool(Options, true);
+                        _exitContentAnimator.SetBool(Exit, false);
                         
                         PlayContent.active = false;
                         OptionsContent.active = true;
@@ -135,20 +141,20 @@ public class MenuManager : MonoBehaviour
                         _credits = true;
                         _options = false;
                         _exit = false;
-                        _playTextAnimator.SetBool("Play",false);
-                        _creditsTextAnimator.SetBool("Credits", true);
-                        _optionsTextAnimator.SetBool("Options", false);
-                        _exitTextAnimator.SetBool("Exit", false);
+                        _playTextAnimator.SetBool(Play,false);
+                        _creditsTextAnimator.SetBool(Credits, true);
+                        _optionsTextAnimator.SetBool(Options, false);
+                        _exitTextAnimator.SetBool(Exit, false);
                         
-                        _playAnimator.SetBool("Play",false);
-                        _creditsAnimator.SetBool("Credits", true);
-                        _optionsAnimator.SetBool("Options", false);
-                        _exitAnimator.SetBool("Exit", false);
+                        _playAnimator.SetBool(Play,false);
+                        _creditsAnimator.SetBool(Credits, true);
+                        _optionsAnimator.SetBool(Options, false);
+                        _exitAnimator.SetBool(Exit, false);
                         
-                        _playContentAnimator.SetBool("Play",false);
-                        _creditsContentAnimator.SetBool("Credits", true);
-                        _optionsContentAnimator.SetBool("Options", false);
-                        _exitContentAnimator.SetBool("Exit", false);
+                        _playContentAnimator.SetBool(Play,false);
+                        _creditsContentAnimator.SetBool(Credits, true);
+                        _optionsContentAnimator.SetBool(Options, false);
+                        _exitContentAnimator.SetBool(Exit, false);
                         
                         PlayContent.active = false;
                         OptionsContent.active = false;
@@ -163,20 +169,20 @@ public class MenuManager : MonoBehaviour
                         _credits = false;
                         _options = false;
                         _exit = true;
-                        _playTextAnimator.SetBool("Play",false);
-                        _creditsTextAnimator.SetBool("Credits", false);
-                        _optionsTextAnimator.SetBool("Options", false);
-                        _exitTextAnimator.SetBool("Exit", true);
+                        _playTextAnimator.SetBool(Play,false);
+                        _creditsTextAnimator.SetBool(Credits, false);
+                        _optionsTextAnimator.SetBool(Options, false);
+                        _exitTextAnimator.SetBool(Exit, true);
                         
-                        _playAnimator.SetBool("Play",false);
-                        _creditsAnimator.SetBool("Credits", false);
-                        _optionsAnimator.SetBool("Options", false);
-                        _exitAnimator.SetBool("Exit",true);
+                        _playAnimator.SetBool(Play,false);
+                        _creditsAnimator.SetBool(Credits, false);
+                        _optionsAnimator.SetBool(Options, false);
+                        _exitAnimator.SetBool(Exit,true);
                         
-                        _playContentAnimator.SetBool("Play",false);
-                        _creditsContentAnimator.SetBool("Credits", false);
-                        _optionsContentAnimator.SetBool("Options", false);
-                        _exitContentAnimator.SetBool("Exit", true);
+                        _playContentAnimator.SetBool(Play,false);
+                        _creditsContentAnimator.SetBool(Credits, false);
+                        _optionsContentAnimator.SetBool(Options, false);
+                        _exitContentAnimator.SetBool(Exit, true);
                         
                         
                         PlayContent.active = false;
@@ -192,20 +198,20 @@ public class MenuManager : MonoBehaviour
                         _credits = false;
                         _options = false;
                         _exit = true;
-                        _playTextAnimator.SetBool("Play",false);
-                        _creditsTextAnimator.SetBool("Credits", false);
-                        _optionsTextAnimator.SetBool("Options", false);
-                        _exitTextAnimator.SetBool("Exit", true);
+                        _playTextAnimator.SetBool(Play,false);
+                        _creditsTextAnimator.SetBool(Credits, false);
+                        _optionsTextAnimator.SetBool(Options, false);
+                        _exitTextAnimator.SetBool(Exit, true);
                         
-                        _playAnimator.SetBool("Play",false);
-                        _creditsAnimator.SetBool("Credits", false);
-                        _optionsAnimator.SetBool("Options", false);
-                        _exitAnimator.SetBool("Exit",true);
+                        _playAnimator.SetBool(Play,false);
+                        _creditsAnimator.SetBool(Credits, false);
+                        _optionsAnimator.SetBool(Options, false);
+                        _exitAnimator.SetBool(Exit,true);
                         
-                        _playContentAnimator.SetBool("Play",false);
-                        _creditsContentAnimator.SetBool("Credits", false);
-                        _optionsContentAnimator.SetBool("Options", false);
-                        _exitContentAnimator.SetBool("Exit", true);
+                        _playContentAnimator.SetBool(Play,false);
+                        _creditsContentAnimator.SetBool(Credits, false);
+                        _optionsContentAnimator.SetBool(Options, false);
+                        _exitContentAnimator.SetBool(Exit, true);
                         
                         
                         PlayContent.active = false;
