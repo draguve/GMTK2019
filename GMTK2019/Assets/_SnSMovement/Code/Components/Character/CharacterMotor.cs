@@ -9,20 +9,56 @@ namespace SnSMovement.Character
 		public float accelerationDuration = 0.5f;
 
 		private Rigidbody2D rb;
+		private Collider2D _collider;
 
 		private Vector2 goalVelocity;
 		private Vector2 currentVelocityRef;
+		
+		
+		public float rayCastDistance = 2f;
+		public LayerMask collisionMask;
 
+		private bool _canMoveRight = true;
+		private bool _canMoveLeft = true;
 		private void Start ()
 		{
 			rb = GetComponent<Rigidbody2D> ();
+			_collider = gameObject.GetComponentInChildren<Collider2D>();
 		}
 
 		private void Update ()
 		{
 			goalVelocity.Normalize ();
 			goalVelocity *= speed;
-			rb.velocity = Vector2.SmoothDamp (rb.velocity, goalVelocity, ref currentVelocityRef, accelerationDuration, float.MaxValue, Time.deltaTime);
+			float x = Mathf.SmoothDamp (rb.velocity.x, goalVelocity.x, ref currentVelocityRef.x, accelerationDuration, float.MaxValue, Time.deltaTime);
+			rb.velocity = new Vector2(x,rb.velocity.y);
+			
+			RaycastHit2D hit = Physics2D.Raycast((transform.position),Vector2.right, rayCastDistance, collisionMask);
+			if (hit)
+			{
+				if (Physics2D.IsTouching(_collider, hit.collider))
+				{
+					_canMoveRight = false;
+				}
+				else
+				{
+					_canMoveRight = true;
+				}
+			}
+        
+			hit = Physics2D.Raycast(transform.position,Vector2.left, rayCastDistance, collisionMask);
+			if (hit)
+			{
+				if (Physics2D.IsTouching(_collider, hit.collider))
+				{
+					_canMoveLeft = false;
+				}
+				else
+				{
+					_canMoveLeft = true;
+				}	
+			}
+			
 		}
 
 		public void Move (Vector2 direction)
@@ -32,11 +68,22 @@ namespace SnSMovement.Character
 
 		public void MoveHorizontal (float amount)
 		{
+			if (!_canMoveLeft && amount < 0) amount = 0;
+			if (!_canMoveRight && amount > 0) amount = 0;
+//			Debug.Log("can move right - " + _canMoveRight);
+//			Debug.Log("can move left - " + _canMoveLeft);
+//			Debug.Log(amount);
 			goalVelocity.x = amount;
 		}
+		
 		public void MoveVertical(float amount)
 		{
 			goalVelocity.y = amount;
+		}
+
+		public void Jump(float jumpVelocity)
+		{
+			rb.velocity = rb.velocity + Vector2.up * jumpVelocity;
 		}
 	}
 }

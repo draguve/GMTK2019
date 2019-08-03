@@ -62,6 +62,8 @@
     <Compile Include="Assets\_SnSMovement\Code\Components\General\Transform\ForceRotationIdentity.cs" />
     <Compile Include="Assets\_SnSMovement\Code\Components\General\Transform\LookAlongVelocity.cs" />
     <Compile Include="Assets\_SnSMovement\Code\Components\General\Transform\ScaleByVelocity.cs" />
+    <Compile Include="Assets\Scripts\MMCooldown.cs" />
+    <Compile Include="Assets\Scripts\PlayerJump.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>/Users/Jaineet/GMTK2019/GMTK2019/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
