@@ -10,11 +10,12 @@ namespace MoreMountains.TopDownEngine
     /// </summary>
     public class MovingPlatform2D : MMPathMovement
     {
-        private Rigidbody2D rigidbody;
+        private Rigidbody2D rb;
 
-        void Start()
+        protected override void Start()
         {
-            rigidbody = GetComponent<Rigidbody2D>();
+            base.Start();
+            rb = GetComponent<Rigidbody2D>();
         }
         
         /// <summary>
@@ -23,11 +24,7 @@ namespace MoreMountains.TopDownEngine
         /// <param name="collider"></param>
         protected virtual void OnTriggerEnter2D(Collider2D collider)
         {
-            CharacterMotor motor = collider.GetComponent<CharacterMotor>();
-            if (motor != null)
-            {
-                motor.SetMovingPlatform(rigidbody);
-            }
+
         }
 
         /// <summary>
@@ -36,7 +33,7 @@ namespace MoreMountains.TopDownEngine
         /// <param name="collider"></param>
         protected virtual void OnTriggerExit2D(Collider2D collider)
         {
-            
+
         }
     }
 }

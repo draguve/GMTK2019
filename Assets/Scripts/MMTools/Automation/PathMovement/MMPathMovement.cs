@@ -16,7 +16,8 @@ namespace MoreMountains.Tools
 		{
 			ConstantSpeed,
 			EaseOut,
-			AnimationCurve
+			AnimationCurve,
+			FUCKTHISSHIT
 		}
 
 		/// the possible cycle options
@@ -66,6 +67,9 @@ namespace MoreMountains.Tools
         /// if this is true, the object can move along the path
         public virtual bool CanMove { get; set; }
 
+        public Rigidbody2D rb;
+        
+        
 		protected bool _active=false;
 	    protected IEnumerator<Vector3> _currentPoint;
 		protected int _direction = 1;
@@ -123,6 +127,10 @@ namespace MoreMountains.Tools
 				_originalTransformPosition = transform.position;
 			}
 			transform.position = _originalTransformPosition + _currentPoint.Current;
+			if (AccelerationType == PossibleAccelerationType.FUCKTHISSHIT)
+			{
+				rb = GetComponent<Rigidbody2D>();
+			}
 		}
 
 		/// <summary>
@@ -158,6 +166,7 @@ namespace MoreMountains.Tools
 
 			// we store our initial position to compute the current speed at the end of the udpate	
 			_initialPosition=transform.position;
+
 
 			// we move our object
 			MoveAlongThePath();
@@ -200,7 +209,9 @@ namespace MoreMountains.Tools
 				case PossibleAccelerationType.EaseOut:
 					transform.position = Vector3.Lerp (transform.position, _originalTransformPosition + _currentPoint.Current, Time.deltaTime * MovementSpeed);
 					break;
-
+				case PossibleAccelerationType.FUCKTHISSHIT:
+					rb.velocity = ((_originalTransformPosition + _currentPoint.Current) - transform.position).normalized * MovementSpeed;
+					break;
 				case PossibleAccelerationType.AnimationCurve:
 					float distanceBetweenPoints = Vector3.Distance (_previousPoint, _currentPoint.Current);
 

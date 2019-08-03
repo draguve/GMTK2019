@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using MoreMountains.Tools;
+using UnityEngine;
 
 namespace SnSMovement.Character
 {
@@ -20,6 +21,9 @@ namespace SnSMovement.Character
 
 		public bool _canMoveRight = true;
 		public bool _canMoveLeft = true;
+
+		public LayerMask movingPlatformMask;
+
 		private void Start ()
 		{
 			rb = GetComponent<Rigidbody2D> ();
@@ -30,10 +34,23 @@ namespace SnSMovement.Character
 		{
 			goalVelocity.Normalize ();
 			goalVelocity *= speed;
+
+			RaycastHit2D hit = Physics2D.Raycast((transform.position),Vector2.down, rayCastDistance, movingPlatformMask);
+			if (hit)
+			{
+				if (Physics2D.IsTouching(_collider, hit.collider))
+				{
+					var thing = hit.collider.GetComponent<MMPathMovement>();
+					if (thing)
+					{
+						goalVelocity += hit.transform.GetComponent<Rigidbody2D>().velocity;
+					}
+				}
+			}
+			
 			float x = Mathf.SmoothDamp (rb.velocity.x, goalVelocity.x, ref currentVelocityRef.x, accelerationDuration, float.MaxValue, Time.deltaTime);
 			rb.velocity = new Vector2(x,rb.velocity.y);
-			
-			RaycastHit2D hit = Physics2D.Raycast((transform.position),Vector2.right, rayCastDistance, collisionMask);
+			 hit = Physics2D.Raycast((transform.position),Vector2.right, rayCastDistance, collisionMask);
 			if (hit)
 			{
 				if (Physics2D.IsTouching(_collider, hit.collider))
@@ -59,6 +76,8 @@ namespace SnSMovement.Character
 				}	
 			}
 			
+			
+
 		}
 
 		public void Move (Vector2 direction)
@@ -105,11 +124,6 @@ namespace SnSMovement.Character
 			var velocity1 = rb.velocity;
 			Vector2 velocity = direction.normalized * jumpVeloctiy;
 			rb.velocity = velocity;
-		}
-
-		public void SetMovingPlatform(Rigidbody2D movingPlatform)
-		{
-			
 		}
 	}
 }
