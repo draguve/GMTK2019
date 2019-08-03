@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using MoreMountains.Tools;
+using UnityEngine;
 
 namespace SnSMovement.Character
 {
@@ -7,19 +8,22 @@ namespace SnSMovement.Character
 	{
 		public float speed = 5f;
 		public float accelerationDuration = 0.5f;
-
+		public float dragVelocityScaleFactor = 0.2f;
+		
 		private Rigidbody2D rb;
 		private Collider2D _collider;
 
 		private Vector2 goalVelocity;
 		private Vector2 currentVelocityRef;
 		
-		
 		public float rayCastDistance = 2f;
 		public LayerMask collisionMask;
 
-		private bool _canMoveRight = true;
-		private bool _canMoveLeft = true;
+		public bool _canMoveRight = true;
+		public bool _canMoveLeft = true;
+
+		public LayerMask movingPlatformMask;
+
 		private void Start ()
 		{
 			rb = GetComponent<Rigidbody2D> ();
@@ -30,10 +34,23 @@ namespace SnSMovement.Character
 		{
 			goalVelocity.Normalize ();
 			goalVelocity *= speed;
+
+			RaycastHit2D hit = Physics2D.Raycast((transform.position),Vector2.down, rayCastDistance, movingPlatformMask);
+			if (hit)
+			{
+				if (Physics2D.IsTouching(_collider, hit.collider))
+				{
+					var thing = hit.collider.GetComponent<MMPathMovement>();
+					if (thing)
+					{
+						goalVelocity += hit.transform.GetComponent<Rigidbody2D>().velocity;
+					}
+				}
+			}
+			
 			float x = Mathf.SmoothDamp (rb.velocity.x, goalVelocity.x, ref currentVelocityRef.x, accelerationDuration, float.MaxValue, Time.deltaTime);
 			rb.velocity = new Vector2(x,rb.velocity.y);
-			
-			RaycastHit2D hit = Physics2D.Raycast((transform.position),Vector2.right, rayCastDistance, collisionMask);
+			 hit = Physics2D.Raycast((transform.position),Vector2.right, rayCastDistance, collisionMask);
 			if (hit)
 			{
 				if (Physics2D.IsTouching(_collider, hit.collider))
@@ -59,6 +76,8 @@ namespace SnSMovement.Character
 				}	
 			}
 			
+			
+
 		}
 
 		public void Move (Vector2 direction)
@@ -68,8 +87,23 @@ namespace SnSMovement.Character
 
 		public void MoveHorizontal (float amount)
 		{
-			if (!_canMoveLeft && amount < 0) amount = 0;
-			if (!_canMoveRight && amount > 0) amount = 0;
+			if (!_canMoveLeft && amount < 0)
+			{
+				amount = 0;
+				if (rb.velocity.y < 0)
+				{
+					rb.velocity *= dragVelocityScaleFactor;
+				}
+			}
+
+			if (!_canMoveRight && amount > 0)
+			{
+				if (rb.velocity.y < 0)
+				{
+					rb.velocity *= dragVelocityScaleFactor;
+				}
+				amount = 0;
+			}
 			goalVelocity.x = amount;
 		}
 		
@@ -82,6 +116,13 @@ namespace SnSMovement.Character
 		{
 			var velocity1 = rb.velocity;
 			Vector2 velocity = new Vector2(velocity1.x,Mathf.Min(velocity1.y + jumpVelocity,jumpVelocity));
+			rb.velocity = velocity;
+		}
+
+		public void Jump(Vector2 direction,float jumpVeloctiy)
+		{
+			var velocity1 = rb.velocity;
+			Vector2 velocity = direction.normalized * jumpVeloctiy;
 			rb.velocity = velocity;
 		}
 	}
