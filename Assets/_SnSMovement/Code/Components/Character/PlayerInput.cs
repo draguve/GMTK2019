@@ -17,6 +17,7 @@ namespace SnSMovement.Character
 
 		public InputAxisEvent onHorizontalInputAxis = new InputAxisEvent ();
 		public InputButtonEvent onJump = new InputButtonEvent();
+		public UnityEvent onFlare = new UnityEvent();
 
 		private void Update ()
 		{
@@ -24,6 +25,11 @@ namespace SnSMovement.Character
 			if (Input.GetAxisRaw(verticalAxis) > jumpSens)
 			{
 				onJump.Invoke();
+			}
+
+			if (Input.GetButtonDown("Fire1"))
+			{
+				onFlare.Invoke();	
 			}
 		}
 	}
