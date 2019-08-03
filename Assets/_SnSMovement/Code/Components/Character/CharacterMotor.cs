@@ -106,5 +106,10 @@ namespace SnSMovement.Character
 			Vector2 velocity = direction.normalized * jumpVeloctiy;
 			rb.velocity = velocity;
 		}
+
+		public void SetMovingPlatform(Rigidbody2D movingPlatform)
+		{
+			
+		}
 	}
 }
