@@ -34,6 +34,16 @@ namespace SnSMovement.Character
 		{
 			goalVelocity.Normalize ();
 			goalVelocity *= speed;
+			
+			//Scale to flip the character
+			if (goalVelocity.x < 0f)
+			{
+				transform.localScale = new Vector3(-1,1,1);
+			}
+			else if(goalVelocity.x > 0f)
+			{
+				transform.localScale = new Vector3(1,1,1);
+			}
 
 			RaycastHit2D hit = Physics2D.Raycast((transform.position),Vector2.down, rayCastDistance, movingPlatformMask);
 			if (hit)
@@ -50,7 +60,8 @@ namespace SnSMovement.Character
 			
 			float x = Mathf.SmoothDamp (rb.velocity.x, goalVelocity.x, ref currentVelocityRef.x, accelerationDuration, float.MaxValue, Time.deltaTime);
 			rb.velocity = new Vector2(x,rb.velocity.y);
-			 hit = Physics2D.Raycast((transform.position),Vector2.right, rayCastDistance, collisionMask);
+
+			hit = Physics2D.Raycast((transform.position),Vector2.right, rayCastDistance, collisionMask);
 			if (hit)
 			{
 				if (Physics2D.IsTouching(_collider, hit.collider))
@@ -75,9 +86,6 @@ namespace SnSMovement.Character
 					_canMoveLeft = true;
 				}	
 			}
-			
-			
-
 		}
 
 		public void Move (Vector2 direction)
