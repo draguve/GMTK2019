@@ -57,17 +57,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Rewired\Integration\UnityUI\Editor\RewiredStandaloneInputModuleInspector.cs" />
-    <Compile Include="Assets\Rewired\Internal\Scripts\Editor\CustomInspectors\ControllerDataFilesInspector.cs" />
-    <Compile Include="Assets\Rewired\Internal\Scripts\Editor\CustomInspectors\CustomInspector_External.cs" />
-    <Compile Include="Assets\Rewired\Internal\Scripts\Editor\CustomInspectors\HardwareJoystickMapInspector.cs" />
-    <Compile Include="Assets\Rewired\Internal\Scripts\Editor\CustomInspectors\HardwareJoystickTemplateMapInspector.cs" />
-    <Compile Include="Assets\Rewired\Internal\Scripts\Editor\CustomInspectors\InitializerInspector.cs" />
-    <Compile Include="Assets\Rewired\Internal\Scripts\Editor\CustomInspectors\InputManagerInspector.cs" />
-    <Compile Include="Assets\Rewired\Internal\Scripts\Editor\CustomInspectors\PlayerControllerInspector.cs" />
-    <Compile Include="Assets\Rewired\Internal\Scripts\Editor\CustomInspectors\PlayerMouseInspector.cs" />
-    <Compile Include="Assets\Rewired\Internal\Scripts\Editor\CustomInspectors\UserDataStore_PlayerPrefsInspector.cs" />
-    <Compile Include="Assets\Rewired\Internal\Scripts\Editor\UnityEditorBridge.cs" />
+    <Compile Include="Assets\TutorialInfo\Scripts\Editor\ReadmeEditor.cs" />
+    <Compile Include="Assets\TutorialInfo\Scripts\Editor\TutorialInfoEditor.cs" />
     <Reference Include="UnityEditor.TestRunner">
       <HintPath>/Users/Jaineet/GMTK2019/GMTK2019/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
     </Reference>
@@ -130,6 +121,9 @@
     </Reference>
     <Reference Include="com.unity.multiplayer-hlapi.Runtime">
       <HintPath>/Users/Jaineet/GMTK2019/GMTK2019/Library/ScriptAssemblies/com.unity.multiplayer-hlapi.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualStudio.Editor">
+      <HintPath>/Users/Jaineet/GMTK2019/GMTK2019/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>/Applications/Unity/Unity.app/Contents/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -334,15 +328,6 @@
     </Reference>
     <Reference Include="Sirenix.OdinInspector.Attributes">
       <HintPath>/Users/Jaineet/GMTK2019/GMTK2019/Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinInspector.Attributes.dll</HintPath>
-    </Reference>
-    <Reference Include="Rewired_Core">
-      <HintPath>/Users/Jaineet/GMTK2019/GMTK2019/Assets/Rewired/Internal/Libraries/Runtime/Rewired_Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Rewired_OSX">
-      <HintPath>/Users/Jaineet/GMTK2019/GMTK2019/Assets/Rewired/Internal/Libraries/Runtime/Rewired_OSX.dll</HintPath>
-    </Reference>
-    <Reference Include="Rewired_Editor">
-      <HintPath>/Users/Jaineet/GMTK2019/GMTK2019/Assets/Rewired/Internal/Libraries/Editor/Rewired_Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.Advertisements">
       <HintPath>/Users/Jaineet/GMTK2019/GMTK2019/Library/PackageCache/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll</HintPath>
