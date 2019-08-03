@@ -7,19 +7,19 @@ namespace SnSMovement.Character
 	{
 		public float speed = 5f;
 		public float accelerationDuration = 0.5f;
-
+		public float dragVelocityScaleFactor = 0.2f;
+		
 		private Rigidbody2D rb;
 		private Collider2D _collider;
 
 		private Vector2 goalVelocity;
 		private Vector2 currentVelocityRef;
 		
-		
 		public float rayCastDistance = 2f;
 		public LayerMask collisionMask;
 
-		private bool _canMoveRight = true;
-		private bool _canMoveLeft = true;
+		public bool _canMoveRight = true;
+		public bool _canMoveLeft = true;
 		private void Start ()
 		{
 			rb = GetComponent<Rigidbody2D> ();
@@ -68,8 +68,23 @@ namespace SnSMovement.Character
 
 		public void MoveHorizontal (float amount)
 		{
-			if (!_canMoveLeft && amount < 0) amount = 0;
-			if (!_canMoveRight && amount > 0) amount = 0;
+			if (!_canMoveLeft && amount < 0)
+			{
+				amount = 0;
+				if (rb.velocity.y < 0)
+				{
+					rb.velocity *= dragVelocityScaleFactor;
+				}
+			}
+
+			if (!_canMoveRight && amount > 0)
+			{
+				if (rb.velocity.y < 0)
+				{
+					rb.velocity *= dragVelocityScaleFactor;
+				}
+				amount = 0;
+			}
 			goalVelocity.x = amount;
 		}
 		
@@ -82,6 +97,13 @@ namespace SnSMovement.Character
 		{
 			var velocity1 = rb.velocity;
 			Vector2 velocity = new Vector2(velocity1.x,Mathf.Min(velocity1.y + jumpVelocity,jumpVelocity));
+			rb.velocity = velocity;
+		}
+
+		public void Jump(Vector2 direction,float jumpVeloctiy)
+		{
+			var velocity1 = rb.velocity;
+			Vector2 velocity = direction.normalized * jumpVeloctiy;
 			rb.velocity = velocity;
 		}
 	}
