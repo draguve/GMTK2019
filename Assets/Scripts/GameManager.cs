@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using MoreMountains.Tools;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
     public SceneAsset[] levels;
     public Vector2 spawnOffset;
@@ -52,8 +53,7 @@ public class GameManager : MonoBehaviour
     {
         
     }
-    
-    
+
     private void WarnStartNewGame()
     {
         bool playerConfirm = true;
@@ -70,6 +70,15 @@ public class GameManager : MonoBehaviour
     {
         menuCanvas.SetActive(false);
         StartCoroutine(LoadNextScene(LoadSceneMode.Additive, false));
+    }
+
+    #endregion
+
+    #region Flare
+
+    public void FlarePickedUp()
+    {
+        StartCoroutine(LoadNextScene(LoadSceneMode.Additive));
     }
 
     #endregion
@@ -120,6 +129,6 @@ public class GameManager : MonoBehaviour
     public IEnumerator SceneChange(int Delay = 0)
     {
         yield return new WaitForSeconds(Delay);
-        StartCoroutine(LoadNextScene(LoadSceneMode.Additive, false));
+        StartCoroutine(LoadNextScene(LoadSceneMode.Additive));
     }
 }
