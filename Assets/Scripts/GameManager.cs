@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
         lastSpawnPosition = Vector2.zero;
         CurrentLevel = 0;
         SceneManager.LoadScene(Levels[CurrentLevel].name, LoadSceneMode.Additive);
-        StartCoroutine(SceneChange(3));
+        //StartCoroutine(SceneChange(3));
     }
 
     // Update is called once per frame
