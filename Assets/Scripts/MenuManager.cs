@@ -80,7 +80,7 @@ public class MenuManager : MonoBehaviour
         {
             Debug.Log("play animator is null");
         }
-        
+        ChangeState(state);
     }
     
 
