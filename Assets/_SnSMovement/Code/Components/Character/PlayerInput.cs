@@ -38,6 +38,11 @@ namespace SnSMovement.Character
 			{
 				InGameUIManager.Instance.PauseGame(!InGameUIManager.Instance.isPaused);
 			}
+
+			if (Input.GetButton("Reset"))
+			{
+				GameManager.Instance.restartLevel();
+			}
 		}
 	}
 }

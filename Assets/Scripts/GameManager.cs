@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using MoreMountains.Tools;
+using SnSMovement.Character;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -19,7 +20,9 @@ public class GameManager : Singleton<GameManager>
     public GameObject menuCanvas;
 
     public LevelSave Save;
-    
+    public GameObject player;
+    public Vector3 spawnLocation;
+
     protected const string _saveFolderName = "SaveFiles/";
     protected const string _saveFileName = "Level.txt";
     
@@ -143,5 +146,8 @@ public class GameManager : Singleton<GameManager>
     public void respawnPlayer()
     {
         player.transform.position = spawnLocation;
+        player.GetComponent<FlareHandler>().FlareAvailable = true;
+        player.GetComponent<CharacterMotor>()._canMoveLeft = true;
+        player.GetComponent<CharacterMotor>()._canMoveRight = true;
     }
 }
