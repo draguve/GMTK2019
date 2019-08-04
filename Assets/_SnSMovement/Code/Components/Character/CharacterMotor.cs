@@ -28,11 +28,18 @@ namespace SnSMovement.Character
 		public LayerMask movingPlatformMask;
 		public LayerMask buttonLayerMask;
 
+		public MMFeedback wallFeedback;
+		public MMFeedback jumpFeedback;
+		
+		private bool lastCollided = false;
+		
+
 		private void Start ()
 		{
 			rb = GetComponent<Rigidbody2D> ();
 			_collider = gameObject.GetComponentInChildren<Collider2D>();
 			_buttonCanTrigger = true;
+			wallFeedback.Initialization();
 		}
 
 		private void Update ()
@@ -97,10 +104,16 @@ namespace SnSMovement.Character
 				if (Physics2D.IsTouching(_collider, hit.collider))
 				{
 					_canMoveRight = false;
+					lastCollided = false;
 				}
 				else
 				{
 					_canMoveRight = true;
+					if (!lastCollided)
+					{
+						lastCollided = true;
+						wallFeedback.Play(transform.position);
+					}
 				}
 			}
         
@@ -111,11 +124,17 @@ namespace SnSMovement.Character
 				if (Physics2D.IsTouching(_collider, hit.collider))
 				{
 					_canMoveLeft = false;
+					lastCollided = false;
 				}
 				else
 				{
 					_canMoveLeft = true;
-				}	
+					if (!lastCollided)
+					{
+						lastCollided = true;
+						wallFeedback.Play(transform.position);
+					}
+				}
 			}
 		}
 

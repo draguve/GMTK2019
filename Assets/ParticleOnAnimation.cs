@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using MoreMountains.Tools;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.LWRP;
 
@@ -12,12 +13,17 @@ public class ParticleOnAnimation : MonoBehaviour
     private Light2D FlareLight;
     public AnimationCurve lightCurve;
     public float FlareDuration;
+    public float FlareIntensityMax = 12;
+    public MMFeedback onShoot;
+    public MMFeedback onSmoke;
 
     // Start is called before the first frame update
     void Start()
     {
         smokeParticles = FlareSmoke.GetComponent<ParticleSystem>();
         FlareLight = Light.GetComponent<Light2D>();
+        onShoot.Initialization();
+        onSmoke.Initialization();
     }
 
     // Update is called once per frame
@@ -25,13 +31,13 @@ public class ParticleOnAnimation : MonoBehaviour
     {
         FlareSmoke.SetActive(true);
         smokeParticles.Play();
+        onSmoke.Play(transform.position);
         Debug.Log("Smoke played");
     }
 
     void PlayLight()
     {
-        DOTween.To(x => FlareLight.intensity = x, 0, 12, FlareDuration).SetEase(lightCurve);
-        //FlareLight.intensity = 1;
-        Debug.Log("PLayed Light");
+        onShoot.Play(transform.position);
+        DOTween.To(x => FlareLight.intensity = x, 0,FlareIntensityMax, FlareDuration).SetEase(lightCurve);
     }
 }
