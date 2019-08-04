@@ -81,8 +81,14 @@ public class MenuManager : MonoBehaviour
             Debug.Log("play animator is null");
         }
         
+        ChangeState(1);
+        
     }
-    
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 
     void ChangeState(int x)
     {
@@ -275,7 +281,7 @@ public class MenuManager : MonoBehaviour
             ChangeState(state);
             
         }
-       /* else if ((Input.mousePosition.x > 0) && (Input.mousePosition.x < (_screenWidth / 4)))
+        else if ((Input.mousePosition.x > 0) && (Input.mousePosition.x < (_screenWidth / 4)))
         {
             state = 1;
             ChangeState(state);
@@ -295,7 +301,7 @@ public class MenuManager : MonoBehaviour
             state = 4;
             ChangeState(state);
         }
-        */
+        
         
     }
 }

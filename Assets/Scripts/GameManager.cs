@@ -1,28 +1,63 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using MoreMountains.Tools;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[Serializable]
+public class LevelSave
+{
+    public int level;
+    
+}
 public class GameManager : Singleton<GameManager>
 {
     public SceneAsset[] levels;
     public int currentLevel;
     public GameObject menuCanvas;
 
+    public LevelSave Save;
+    
+    protected const string _saveFolderName = "SaveFiles/";
+    protected const string _saveFileName = "Level.txt";
+    
     // Start is called before the first frame update
     void Start()
     {
         Load();
     }
+    
 
+    protected virtual void SaveLevel()
+    {
+        LevelSave thing = new LevelSave();
+        thing.level = currentLevel-1;
+        SaveLoadManager.Save(thing, _saveFileName, _saveFolderName);
+    }
+
+    /// <summary>
+    /// Loads the sound settings from file (if found)
+    /// </summary>
+    protected virtual void LoadLevel()
+    {
+        LevelSave save = (LevelSave)SaveLoadManager.Load(_saveFileName, _saveFolderName);
+        if (save != null)
+        {
+            Save = save;
+        }
+    }
+    
     #region Save/Load
 
     public void Load()
     {
-        currentLevel = -1;
+        LoadLevel();
+        currentLevel = Save.level;
     }
+    
+    
 
     #endregion
     
@@ -52,7 +87,7 @@ public class GameManager : Singleton<GameManager>
         
         if (playerConfirm)
         {
-            currentLevel = 0;
+            currentLevel = -1;
         }
     }
 
@@ -85,6 +120,8 @@ public class GameManager : Singleton<GameManager>
         {
             Debug.Log("No Scenes to load");
         }
+        SaveLevel();
+        
     }
     
     /// <summary>
