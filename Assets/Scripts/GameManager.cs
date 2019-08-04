@@ -8,30 +8,20 @@ using UnityEngine.SceneManagement;
 public class GameManager : Singleton<GameManager>
 {
     public SceneAsset[] levels;
-    public Vector2 spawnOffset;
     public int currentLevel;
     public GameObject menuCanvas;
 
-    public Vector2 lastSpawnPosition;
     // Start is called before the first frame update
     void Start()
     {
-        lastSpawnPosition = Vector2.zero;
         Load();
-        //StartCoroutine(SceneChange(3));
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     #region Save/Load
 
     public void Load()
     {
-        currentLevel = 0;
+        currentLevel = -1;
     }
 
     #endregion
@@ -40,12 +30,12 @@ public class GameManager : Singleton<GameManager>
 
     public void OnStart()
     {
-        if (currentLevel != 0)
+        if (currentLevel != -1)
         {
             WarnStartNewGame();
         }
+        SimpleLoadNextScene();
         menuCanvas.SetActive(false);
-        SceneManager.LoadScene(levels[currentLevel].name, LoadSceneMode.Additive);
     }
 
     //Function to display levels
@@ -68,8 +58,8 @@ public class GameManager : Singleton<GameManager>
 
     public void OnContinue()
     {
+        SimpleLoadNextScene();
         menuCanvas.SetActive(false);
-        StartCoroutine(LoadNextScene(LoadSceneMode.Additive, false));
     }
 
     #endregion
@@ -78,42 +68,18 @@ public class GameManager : Singleton<GameManager>
 
     public void FlarePickedUp()
     {
-        StartCoroutine(LoadNextScene(LoadSceneMode.Additive));
+        SceneManager.LoadSceneAsync(levels[currentLevel].name, LoadSceneMode.Single);
+        SimpleLoadNextScene();
     }
 
     #endregion
-    
-    /// <summary>
-    /// Used to load hte next scene
-    /// </summary>
-    /// <param name="mode">Load scene mode</param>
-    /// <param name="unloadPrevious">Will the previous scene be unloaded</param>
-    /// <returns></returns>
-    public IEnumerator LoadNextScene(LoadSceneMode mode,bool unloadPrevious = true)
+
+    public void SimpleLoadNextScene()
     {
         if (levels.Length > currentLevel + 1)
         {
             currentLevel++;
-            var spawnPosition = lastSpawnPosition + spawnOffset;
-            var asyncLoadLevel = SceneManager.LoadSceneAsync(levels[currentLevel].name, mode);
-            if (unloadPrevious)
-            {
-                SceneManager.UnloadSceneAsync(levels[currentLevel - 1].name);
-            }
-            
-            while (!asyncLoadLevel.isDone){
-                yield return null;
-            }
-            
-            Scene loadedScene = SceneManager.GetSceneByName(levels[currentLevel].name);
-            SceneManager.SetActiveScene(loadedScene);
-            GameObject[] allObjects = SceneManager.GetActiveScene().GetRootGameObjects();
-            foreach (var root in allObjects)
-            {
-                root.transform.position += (Vector3)spawnPosition;
-            }
-
-            lastSpawnPosition = spawnPosition;
+            SceneManager.LoadScene(levels[currentLevel].name);
         }
         else
         {
@@ -129,6 +95,6 @@ public class GameManager : Singleton<GameManager>
     public IEnumerator SceneChange(int Delay = 0)
     {
         yield return new WaitForSeconds(Delay);
-        StartCoroutine(LoadNextScene(LoadSceneMode.Additive));
+        SimpleLoadNextScene();
     }
 }
