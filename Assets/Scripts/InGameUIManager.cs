@@ -11,11 +11,17 @@ public class InGameUIManager : Singleton<InGameUIManager>
     public Vector2 onScreenOffset;
     public float pauseScreenAnimationDuration;
     public AnimationCurve pauseScreenAnimationCurve;
+    public MMFeedback onPause;
     
     public GameObject ammoIcon;
 
     public bool isPaused = false;
 
+    void Start()
+    {
+        onPause.Initialization();
+    }
+    
     public void HaveAFlare(bool haveFlare)
     {
         ammoIcon.SetActive(haveFlare);
@@ -34,11 +40,27 @@ public class InGameUIManager : Singleton<InGameUIManager>
         {
             pauseScreen.DOLocalMove(onScreenOffset, pauseScreenAnimationDuration).SetEase(pauseScreenAnimationCurve).OnComplete(() => Stop()).SetUpdate(UpdateType.Late, true);;
         }
+        onPause.Play(transform.position);
     }
 
     public void Stop()
     {
         pauseScreen.gameObject.SetActive(false);
         Time.timeScale = 1f;
+    }
+
+    public void ContinueButton()
+    {
+        PauseGame(false);
+    }
+
+    public void MainMenuButton()
+    {
+        //Function to go back to main menu
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 }
