@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
-    public SceneAsset[] levels;
+    public int[] levels;
     public int currentLevel;
     public GameObject menuCanvas;
 
@@ -71,7 +71,7 @@ public class GameManager : Singleton<GameManager>
 
     public void FlarePickedUp()
     {
-        SceneManager.LoadSceneAsync(levels[currentLevel].name, LoadSceneMode.Single);
+        SceneManager.LoadSceneAsync(levels[currentLevel], LoadSceneMode.Single);
         SimpleLoadNextScene();
     }
 
@@ -82,7 +82,7 @@ public class GameManager : Singleton<GameManager>
         if (levels.Length > currentLevel + 1)
         {
             currentLevel++;
-            SceneManager.LoadScene(levels[currentLevel].name);
+            SceneManager.LoadScene(levels[currentLevel]);
         }
         else
         {
@@ -103,7 +103,7 @@ public class GameManager : Singleton<GameManager>
 
     public void restartLevel()
     {
-        SceneManager.LoadScene(levels[currentLevel].name);
+        SceneManager.LoadScene(levels[currentLevel]);
     }
     
     public void respawnPlayer()
