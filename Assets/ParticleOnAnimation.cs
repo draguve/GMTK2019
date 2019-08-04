@@ -32,7 +32,6 @@ public class ParticleOnAnimation : MonoBehaviour
         FlareSmoke.SetActive(true);
         smokeParticles.Play();
         onSmoke.Play(transform.position);
-        Debug.Log("Smoke played");
     }
 
     void PlayLight()

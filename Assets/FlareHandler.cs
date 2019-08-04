@@ -19,6 +19,12 @@ public class FlareHandler : MonoBehaviour
         _flareAnimator = Flare.GetComponent<Animator>();
         flareShotStartFeedback.Initialization();
         flareCannotBeShotFeedback.Initialization();
+
+        if (FlareAvailable && InGameUIManager.IsPresent())
+        {
+            InGameUIManager.Instance.HaveAFlare(FlareAvailable);
+        }
+        
     }
 
     // Update is called once per frame
@@ -26,8 +32,17 @@ public class FlareHandler : MonoBehaviour
     {
         if (FlareAvailable)
         {
+            
             _flareAnimator.SetTrigger("ShootFlare");
             flareShotStartFeedback.Play(transform.position);
+            
+            if (InGameUIManager.IsPresent())
+            {
+                InGameUIManager.Instance.HaveAFlare(false);
+            }
+
+            FlareAvailable = false;
+
         }
         else
         {

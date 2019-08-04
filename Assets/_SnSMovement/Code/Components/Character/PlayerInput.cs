@@ -7,7 +7,7 @@ namespace SnSMovement.Character
 	public class InputAxisEvent : UnityEvent<float>{}
 
 	[System.Serializable]
-	public class InputButtonEvent : UnityEvent{}
+	public class InputButtonEvent : UnityEvent { }
 
 	public class PlayerInput : MonoBehaviour
 	{
@@ -19,17 +19,27 @@ namespace SnSMovement.Character
 		public InputButtonEvent onJump = new InputButtonEvent();
 		public UnityEvent onFlare = new UnityEvent();
 
+		public bool isPaused = false;
+
 		private void Update ()
 		{
-			onHorizontalInputAxis.Invoke (Input.GetAxisRaw(horizontalAxis));
-			if (Input.GetAxisRaw(verticalAxis) > jumpSens)
+			if (!isPaused)
 			{
-				onJump.Invoke();
-			}
+				onHorizontalInputAxis.Invoke (Input.GetAxisRaw(horizontalAxis));
+				if (Input.GetAxisRaw(verticalAxis) > jumpSens)
+				{
+					onJump.Invoke();
+				}
 
-			if (Input.GetButtonDown("Fire1"))
+				if (Input.GetButtonDown("Fire1"))
+				{
+					onFlare.Invoke();	
+				}
+			}
+			if (Input.GetButtonDown("Cancel"))
 			{
-				onFlare.Invoke();	
+				InGameUIManager.Instance.PauseGame(!isPaused);
+				isPaused = !isPaused;
 			}
 		}
 	}
