@@ -19,11 +19,9 @@ namespace SnSMovement.Character
 		public InputButtonEvent onJump = new InputButtonEvent();
 		public UnityEvent onFlare = new UnityEvent();
 
-		public bool isPaused = false;
-
 		private void Update ()
 		{
-			if (!isPaused)
+			if (!InGameUIManager.IsPresent() || !InGameUIManager.Instance.isPaused)
 			{
 				onHorizontalInputAxis.Invoke (Input.GetAxisRaw(horizontalAxis));
 				if (Input.GetAxisRaw(verticalAxis) > jumpSens)
@@ -38,8 +36,7 @@ namespace SnSMovement.Character
 			}
 			if (Input.GetButtonDown("Cancel"))
 			{
-				InGameUIManager.Instance.PauseGame(!isPaused);
-				isPaused = !isPaused;
+				InGameUIManager.Instance.PauseGame(!InGameUIManager.Instance.isPaused);
 			}
 		}
 	}

@@ -14,7 +14,7 @@ public class InGameUIManager : Singleton<InGameUIManager>
     
     public GameObject ammoIcon;
 
-    public static bool isPaused = false;
+    public bool isPaused = false;
 
     public void HaveAFlare(bool haveFlare)
     {
