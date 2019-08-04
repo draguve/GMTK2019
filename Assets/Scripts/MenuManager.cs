@@ -7,14 +7,15 @@ using UnityEngine;
 public class MenuManager : MonoBehaviour
 {
 
-    public GameObject PlayPanel,OptionsPanel,CreditsPanel,ExitPanel;
+    public GameObject PlayPanel, OptionsPanel, CreditsPanel, ExitPanel, Holder;
     public TextMeshProUGUI PlayText,OptionsText,CreditsText,ExitText;
     private Animator _playAnimator,_optionsAnimator,_creditsAnimator,_exitAnimator;
     private Animator _playTextAnimator,_optionsTextAnimator,_creditsTextAnimator,_exitTextAnimator;
-    private Animator _playContentAnimator,_optionsContentAnimator,_creditsContentAnimator,_exitContentAnimator;
+    private Animator _playContentAnimator,_optionsContentAnimator,_creditsContentAnimator,_exitContentAnimator,_spacingAnimator;
 
     public GameObject PlayContent, OptionsContent, CreditsContent, ExitContent;
-
+    
+    
     private int _screenWidth;
     
     private bool _play,_credits,_options,_exit;
@@ -25,7 +26,9 @@ public class MenuManager : MonoBehaviour
     private static readonly int Play = Animator.StringToHash("Play");
     private static readonly int Credits = Animator.StringToHash("Credits");
     private static readonly int Options = Animator.StringToHash("Options");
-
+    
+    
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -69,7 +72,9 @@ public class MenuManager : MonoBehaviour
         OptionsContent.active = false;
         CreditsContent.active = false;
        //ExitContent.active = false;
-        
+
+       _spacingAnimator = Holder.GetComponent<Animator>();
+       
         
         if (_playAnimator == null)
         {
@@ -108,6 +113,10 @@ public class MenuManager : MonoBehaviour
                 CreditsContent.active = false;
                // ExitContent.active = false;
                 
+                _spacingAnimator.SetBool(Play,true);
+                _spacingAnimator.SetBool(Options,false);
+                _spacingAnimator.SetBool(Credits,false);
+                
                 //state = state+x;
                 break;
             case 2:
@@ -135,6 +144,10 @@ public class MenuManager : MonoBehaviour
                 CreditsContent.active = false;
                // ExitContent.active = false;
                 
+                _spacingAnimator.SetBool(Play,false);
+                _spacingAnimator.SetBool(Options,true);
+                _spacingAnimator.SetBool(Credits,false);
+                
                 //state = state+x;
                 break;
             case 3:
@@ -161,6 +174,10 @@ public class MenuManager : MonoBehaviour
                 OptionsContent.active = false;
                 CreditsContent.active = true;
                // ExitContent.active = false;
+                
+                _spacingAnimator.SetBool(Play,false);
+                _spacingAnimator.SetBool(Options,false);
+                _spacingAnimator.SetBool(Credits,true);
                 
                 
                // state = state+x;
@@ -192,6 +209,10 @@ public class MenuManager : MonoBehaviour
                 CreditsContent.active = false;
                 //ExitContent.active = true;
                 
+                _spacingAnimator.SetBool(Play,false);
+                _spacingAnimator.SetBool(Options,false);
+                _spacingAnimator.SetBool(Credits,false);
+                
                 //state = (state+x)%4;
                 break;
             case 0:
@@ -220,6 +241,11 @@ public class MenuManager : MonoBehaviour
                 OptionsContent.active = false;
                 CreditsContent.active = false;
                // ExitContent.active = true;
+                
+                
+                _spacingAnimator.SetBool(Play,false);
+                _spacingAnimator.SetBool(Options,false);
+                _spacingAnimator.SetBool(Credits,false);
                // 
                 //state = (state+x)%4;
                 break;
@@ -249,7 +275,7 @@ public class MenuManager : MonoBehaviour
             ChangeState(state);
             
         }
-        else if ((Input.mousePosition.x > 0) && (Input.mousePosition.x < (_screenWidth / 4)))
+       /* else if ((Input.mousePosition.x > 0) && (Input.mousePosition.x < (_screenWidth / 4)))
         {
             state = 1;
             ChangeState(state);
@@ -269,6 +295,7 @@ public class MenuManager : MonoBehaviour
             state = 4;
             ChangeState(state);
         }
+        */
         
     }
 }
