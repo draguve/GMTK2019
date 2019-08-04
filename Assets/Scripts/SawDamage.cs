@@ -6,17 +6,18 @@ using UnityEngine;
 public class SawDamage : MonoBehaviour
 {
     public float rotationSpeed;
-    
-    void OnCollisionEnter2D(Collision2D col)
+
+    private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.name == "Character")
+        if (col.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            Destroy(col.gameObject);
+            GameManager.Instance.respawnPlayer();
         }
     }
 
     private void Update()
     {
-        transform.rotation = Quaternion.Euler(0,0,transform.rotation.eulerAngles.z + rotationSpeed * Time.deltaTime);
+        transform.Rotate (Vector3.forward * -rotationSpeed * Time.deltaTime);
+//        transform.rotation = Quaternion.Euler(0,0,transform.rotation.eulerAngles.z + rotationSpeed * Time.deltaTime);
     }
 }

@@ -36,6 +36,7 @@ namespace SnSMovement.Character
 
 		private void Start ()
 		{
+			GameManager.Instance.player = gameObject;
 			rb = GetComponent<Rigidbody2D> ();
 			_collider = gameObject.GetComponentInChildren<Collider2D>();
 			_buttonCanTrigger = true;

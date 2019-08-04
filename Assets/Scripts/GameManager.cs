@@ -11,6 +11,9 @@ public class GameManager : Singleton<GameManager>
     public int currentLevel;
     public GameObject menuCanvas;
 
+    public GameObject player;
+    public Vector3 spawnLocation;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -52,7 +55,7 @@ public class GameManager : Singleton<GameManager>
         
         if (playerConfirm)
         {
-            currentLevel = 0;
+            currentLevel = -1;
         }
     }
 
@@ -96,5 +99,10 @@ public class GameManager : Singleton<GameManager>
     {
         yield return new WaitForSeconds(Delay);
         SimpleLoadNextScene();
+    }
+
+    public void respawnPlayer()
+    {
+        player.transform.position = spawnLocation;
     }
 }

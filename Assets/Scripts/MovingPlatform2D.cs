@@ -25,6 +25,7 @@ namespace MoreMountains.TopDownEngine
         void Start()
         {
             base.Start();
+            MovementSpeed = 0;
             if (startMoving)
             {
                 MovementSpeed = movementSpeedToSet;
