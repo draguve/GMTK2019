@@ -22,6 +22,10 @@ public class ParticleOnAnimation : MonoBehaviour
     {
         smokeParticles = FlareSmoke.GetComponent<ParticleSystem>();
         FlareLight = Light.GetComponent<Light2D>();
+        if (FlareLight == null)
+        {
+            Debug.Log("FlareLight null");
+        }
         onShoot.Initialization();
         onSmoke.Initialization();
     }
@@ -36,7 +40,9 @@ public class ParticleOnAnimation : MonoBehaviour
 
     void PlayLight()
     {
+        Debug.Log("PLaying Flare");
         onShoot.Play(transform.position);
+        //FlareLight.intensity = 1;
         DOTween.To(x => FlareLight.intensity = x, 0,FlareIntensityMax, FlareDuration).SetEase(lightCurve);
     }
 }

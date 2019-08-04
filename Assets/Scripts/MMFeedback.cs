@@ -60,12 +60,7 @@ namespace MoreMountains.Tools
         /// </summary>
         public virtual void Initialization(GameObject gameObject = null)
         {
-            // Sounds
-            if (Sfx != null)
-            {
-                MMSfxEvent.Trigger(Sfx);
-            }
-            
+
             if (InstantiateVFX && VfxCreateObjectPool)
             {
                 GameObject objectPoolGo = new GameObject();
