@@ -101,6 +101,11 @@ public class GameManager : Singleton<GameManager>
         SimpleLoadNextScene();
     }
 
+    public void restartLevel()
+    {
+        SceneManager.LoadScene(levels[currentLevel].name);
+    }
+    
     public void respawnPlayer()
     {
         player.transform.position = spawnLocation;
