@@ -18,6 +18,11 @@ public class PlayerJump : MonoBehaviour
     private Collider2D _collider;
     private int wallJump=0;
 
+    private bool _jumpSound;
+    private float _trackTIme=0;
+    
+    public MMFeedback JumpFeedback;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +30,7 @@ public class PlayerJump : MonoBehaviour
         characterMotor = GetComponent<CharacterMotor>();
         _collider = GetComponentInChildren<Collider2D>();
         wallJump = 0;
+        _jumpSound = true;
     }
 
     // Update is called once per frame
@@ -42,6 +48,10 @@ public class PlayerJump : MonoBehaviour
                 }
             }
         }
+
+        _trackTIme += Time.deltaTime;
+        
+
     }
 
     
@@ -54,6 +64,13 @@ public class PlayerJump : MonoBehaviour
         {
             characterMotor.Jump(jumpVelocity);
             isJumping = true;
+            if (_trackTIme>1f)
+            {
+                JumpFeedback.Play(this.transform.position);
+                _jumpSound = false;
+                _trackTIme = 0;
+            }
+            
         }
 
         //Cant move left hence wall there
@@ -61,12 +78,24 @@ public class PlayerJump : MonoBehaviour
         {
             characterMotor.Jump(Vector2.up + Vector2.right,jumpVelocity);
             wallJump += 1;
+            if (_trackTIme>1f)
+            {
+                JumpFeedback.Play(this.transform.position);
+                _jumpSound = false;
+                _trackTIme = 0;
+            }
         }
         
         if (!characterMotor._canMoveRight && isJumping && wallJump <= maxWallJumps)
         {
             characterMotor.Jump(Vector2.up + Vector2.left,jumpVelocity);
             wallJump += 1;
+            if (_trackTIme>1f)
+            {
+                JumpFeedback.Play(this.transform.position);
+                _jumpSound = false;
+                _trackTIme = 0;
+            }
         }
         
     }

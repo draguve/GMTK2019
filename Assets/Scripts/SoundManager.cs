@@ -3,6 +3,8 @@ using System.Collections;
 using MoreMountains.Tools;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using UnityEngine.UI;
 
 namespace MoreMountains.TopDownEngine
 {
@@ -133,6 +135,15 @@ namespace MoreMountains.TopDownEngine
                 _loopingSounds.Remove(source);
                 Destroy(source.gameObject);
             }
+        }
+
+        public void ChangeMusicVolume(Slider slider)
+        {
+            MusicVolume = slider.value;
+        }
+        public void ChangeSfxVolume(Slider slider)
+        {
+            SfxVolume = slider.value;
         }
 
         /// <summary>

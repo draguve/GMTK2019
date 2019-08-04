@@ -39,7 +39,7 @@ namespace SnSMovement.Character
 			rb = GetComponent<Rigidbody2D> ();
 			_collider = gameObject.GetComponentInChildren<Collider2D>();
 			_buttonCanTrigger = true;
-			wallFeedback.Initialization();
+			
 		}
 
 		private void Update ()
@@ -182,6 +182,7 @@ namespace SnSMovement.Character
 			var velocity1 = rb.velocity;
 			Vector2 velocity = direction.normalized * jumpVeloctiy;
 			rb.velocity = velocity;
+			
 		}
 	}
 }
