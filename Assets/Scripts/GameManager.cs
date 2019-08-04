@@ -1,56 +1,85 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using MoreMountains.Tools;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
-    public SceneAsset[] Levels;
-    public Vector2 spawnOffset;
-    public int CurrentLevel;
+    public SceneAsset[] levels;
+    public int currentLevel;
+    public GameObject menuCanvas;
 
-    public Vector2 lastSpawnPosition;
     // Start is called before the first frame update
     void Start()
     {
-        lastSpawnPosition = Vector2.zero;
-        CurrentLevel = 0;
-        SceneManager.LoadScene(Levels[CurrentLevel].name, LoadSceneMode.Additive);
-        StartCoroutine(SceneChange(3));
+        Load();
     }
 
-    // Update is called once per frame
-    void Update()
+    #region Save/Load
+
+    public void Load()
+    {
+        currentLevel = -1;
+    }
+
+    #endregion
+    
+    #region Menu : Play
+
+    public void OnStart()
+    {
+        if (currentLevel != -1)
+        {
+            WarnStartNewGame();
+        }
+        SimpleLoadNextScene();
+        menuCanvas.SetActive(false);
+    }
+
+    //Function to display levels
+    public void Levels()
     {
         
     }
 
-    public IEnumerator LoadNextScene(LoadSceneMode mode,bool unloadPrevious = true)
+    private void WarnStartNewGame()
     {
-        if (Levels.Length > CurrentLevel + 1)
-        {
-            CurrentLevel++;
-            var spawnPosition = lastSpawnPosition + spawnOffset;
-            var asyncLoadLevel = SceneManager.LoadSceneAsync(Levels[CurrentLevel].name, LoadSceneMode.Additive);
-            if (unloadPrevious)
-            {
-                SceneManager.UnloadSceneAsync(Levels[CurrentLevel - 1].name);
-            }
-            
-            while (!asyncLoadLevel.isDone){
-                yield return null;
-            }
-            
-            Scene loadedScene = SceneManager.GetSceneByName(Levels[CurrentLevel].name);
-            SceneManager.SetActiveScene(loadedScene);
-            GameObject[] allObjects = SceneManager.GetActiveScene().GetRootGameObjects();
-            foreach (var root in allObjects)
-            {
-                root.transform.position += (Vector3)spawnPosition;
-            }
+        bool playerConfirm = true;
 
-            lastSpawnPosition = spawnPosition;
+        // code to confirm
+        
+        if (playerConfirm)
+        {
+            currentLevel = 0;
+        }
+    }
+
+    public void OnContinue()
+    {
+        SimpleLoadNextScene();
+        menuCanvas.SetActive(false);
+    }
+
+    #endregion
+
+    #region Flare
+
+    public void FlarePickedUp()
+    {
+        SceneManager.LoadSceneAsync(levels[currentLevel].name, LoadSceneMode.Single);
+        SimpleLoadNextScene();
+    }
+
+    #endregion
+
+    public void SimpleLoadNextScene()
+    {
+        if (levels.Length > currentLevel + 1)
+        {
+            currentLevel++;
+            SceneManager.LoadScene(levels[currentLevel].name);
         }
         else
         {
@@ -58,9 +87,14 @@ public class GameManager : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// Not to be used in the real game, just for testing
+    /// </summary>
+    /// <param name="Delay"></param>
+    /// <returns></returns>
     public IEnumerator SceneChange(int Delay = 0)
     {
         yield return new WaitForSeconds(Delay);
-        StartCoroutine(LoadNextScene(LoadSceneMode.Additive, false));
+        SimpleLoadNextScene();
     }
 }

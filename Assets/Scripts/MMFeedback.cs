@@ -51,9 +51,6 @@ namespace MoreMountains.Tools
         [Header("Sounds")]
         /// a sound fx to play when this feedback is played
         public AudioClip Sfx;
-
-
-        
         
         protected GameObject _newGameObject;
         protected Color _initialFlickerColor;
@@ -63,6 +60,12 @@ namespace MoreMountains.Tools
         /// </summary>
         public virtual void Initialization(GameObject gameObject = null)
         {
+            // Sounds
+            if (Sfx != null)
+            {
+                MMSfxEvent.Trigger(Sfx);
+            }
+            
             if (InstantiateVFX && VfxCreateObjectPool)
             {
                 GameObject objectPoolGo = new GameObject();
@@ -139,6 +142,11 @@ namespace MoreMountains.Tools
                 Particles.Play();
             }
             
+            // Sounds
+            if (Sfx != null)
+            {
+                MMSfxEvent.Trigger(Sfx);
+            }
         }
 
         /// <summary>
