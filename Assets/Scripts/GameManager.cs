@@ -6,17 +6,17 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public SceneAsset[] Levels;
+    public SceneAsset[] levels;
     public Vector2 spawnOffset;
-    public int CurrentLevel;
+    public int currentLevel;
+    public GameObject menuCanvas;
 
     public Vector2 lastSpawnPosition;
     // Start is called before the first frame update
     void Start()
     {
         lastSpawnPosition = Vector2.zero;
-        CurrentLevel = 0;
-        SceneManager.LoadScene(Levels[CurrentLevel].name, LoadSceneMode.Additive);
+        Load();
         //StartCoroutine(SceneChange(3));
     }
 
@@ -26,23 +26,77 @@ public class GameManager : MonoBehaviour
         
     }
 
+    #region Save/Load
+
+    public void Load()
+    {
+        currentLevel = 0;
+    }
+
+    #endregion
+    
+    #region Menu : Play
+
+    public void OnStart()
+    {
+        if (currentLevel != 0)
+        {
+            WarnStartNewGame();
+        }
+        menuCanvas.SetActive(false);
+        SceneManager.LoadScene(levels[currentLevel].name, LoadSceneMode.Additive);
+    }
+
+    //Function to display levels
+    public void Levels()
+    {
+        
+    }
+    
+    
+    private void WarnStartNewGame()
+    {
+        bool playerConfirm = true;
+
+        // code to confirm
+        
+        if (playerConfirm)
+        {
+            currentLevel = 0;
+        }
+    }
+
+    public void OnContinue()
+    {
+        menuCanvas.SetActive(false);
+        StartCoroutine(LoadNextScene(LoadSceneMode.Additive, false));
+    }
+
+    #endregion
+    
+    /// <summary>
+    /// Used to load hte next scene
+    /// </summary>
+    /// <param name="mode">Load scene mode</param>
+    /// <param name="unloadPrevious">Will the previous scene be unloaded</param>
+    /// <returns></returns>
     public IEnumerator LoadNextScene(LoadSceneMode mode,bool unloadPrevious = true)
     {
-        if (Levels.Length > CurrentLevel + 1)
+        if (levels.Length > currentLevel + 1)
         {
-            CurrentLevel++;
+            currentLevel++;
             var spawnPosition = lastSpawnPosition + spawnOffset;
-            var asyncLoadLevel = SceneManager.LoadSceneAsync(Levels[CurrentLevel].name, LoadSceneMode.Additive);
+            var asyncLoadLevel = SceneManager.LoadSceneAsync(levels[currentLevel].name, mode);
             if (unloadPrevious)
             {
-                SceneManager.UnloadSceneAsync(Levels[CurrentLevel - 1].name);
+                SceneManager.UnloadSceneAsync(levels[currentLevel - 1].name);
             }
             
             while (!asyncLoadLevel.isDone){
                 yield return null;
             }
             
-            Scene loadedScene = SceneManager.GetSceneByName(Levels[CurrentLevel].name);
+            Scene loadedScene = SceneManager.GetSceneByName(levels[currentLevel].name);
             SceneManager.SetActiveScene(loadedScene);
             GameObject[] allObjects = SceneManager.GetActiveScene().GetRootGameObjects();
             foreach (var root in allObjects)
@@ -58,6 +112,11 @@ public class GameManager : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// Not to be used in the real game, just for testing
+    /// </summary>
+    /// <param name="Delay"></param>
+    /// <returns></returns>
     public IEnumerator SceneChange(int Delay = 0)
     {
         yield return new WaitForSeconds(Delay);
